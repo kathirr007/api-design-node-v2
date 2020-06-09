@@ -3,6 +3,7 @@ mongoose.Promise = global.Promise
 
 export const connect = () => {
   return mongoose.connect('mongodb://localhost/jams', {
-    useMongoClient: true
+    useUnifiedTopology: true,
+    useNewUrlParser: true
   })
 }

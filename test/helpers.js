@@ -23,7 +23,8 @@ export const removeModel = (modelName) => {
 
 export const dropDb = () => {
   return mongoose.connect('mongodb://localhost/jams-test', {
-    useMongoClient: true
+    useUnifiedTopology: true,
+    useNewUrlParser: true
   })
     .then(() => Promise.all(mongoose.modelNames().map(removeModel)))
 }
