@@ -4,27 +4,32 @@ const testData = {message: 'hello'}
 // These are generic methods used in the generic controllers for all models
 export const controllers = {
   createOne(model, body) {
-    return Promise.resolve(testData)
+    return model.create(body)
   },
 
   updateOne(docToUpdate, update) {
-    return Promise.resolve(testData)
+    merge(docToUpdate, update)
+    return docToUpdate.save()
+    // return Promise.resolve(testData)
   },
 
   deleteOne(docToDelete) {
-    return Promise.resolve(testData)
+    return docToDelete.deleteOne()
+    // return Promise.resolve(testData)
   },
 
   getOne(docToGet) {
-    return Promise.resolve(testData)
+    return Promise.resolve(docToGet)
   },
 
   getAll(model) {
-    return Promise.resolve(testData)
+    return model.find({})
+    // return Promise.resolve(testData)
   },
 
   findByParam(model, id) {
-    return Promise.resolve(testData)
+    return model.findById(id)
+    // return Promise.resolve(testData)
   }
 }
 
