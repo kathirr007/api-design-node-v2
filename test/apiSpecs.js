@@ -30,6 +30,17 @@ const createApiSpec = (model, resourceName, newResource) => {
         expect(result).to.have.status(200)
         expect(result).to.be.json
       })
+
+      it(`should get one ${resourceName}`, async () => {
+        const newDoc = await model.create(newResource)
+
+        const result = await chai.request(app)
+          .get(`/api/${resourceName}/${newDoc.id}`)
+          .set('Authorization', `Bearer ${jwt}`)
+
+        expect(result).to.have.status(200)
+        expect(result).to.be.json
+      })
     })
 
     describe(`POST /${resourceName}`, () => {
@@ -38,6 +49,32 @@ const createApiSpec = (model, resourceName, newResource) => {
           .post(`/api/${resourceName}`)
           .set('Authorization', `Bearer ${jwt}`)
           .send(newResource)
+
+        expect(result).to.have.status(201)
+        expect(result).to.be.json
+      })
+    })
+
+    describe(`PUT /${resourceName}`, () => {
+      it(`should update a ${resourceName}`, async () => {
+        const newDoc = await model.create(newResource)
+
+        const result = await chai.request(app)
+          .put(`/api/${resourceName}/${newDoc.id}`)
+          .set('Authorization', `Bearer ${jwt}`)
+
+        expect(result).to.have.status(201)
+        expect(result).to.be.json
+      })
+    })
+
+    describe(`DELETE /${resourceName}`, () => {
+      it(`should delete a ${resourceName}`, async () => {
+        const newDoc = await model.create(newResource)
+
+        const result = await chai.request(app)
+          .delete(`/api/${resourceName}/${newDoc.id}`)
+          .set('Authorization', `Bearer ${jwt}`)
 
         expect(result).to.have.status(201)
         expect(result).to.be.json
