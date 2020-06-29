@@ -8,9 +8,28 @@ const allSongs = () => {
   return Song.find({}).exec()
 }
 
+const newSong = (_, {input}) => {
+  return Song.create(input)
+}
+
+const updateSong = (_, {input}) => {
+  const {id, ...update} = input
+  
+  return Song.findByIdAndUpdate(id, update, {new: true, upsert: true}).exec()
+}
+
+const removeSong = (_, {id}) => {
+  return Song.findByIdAndRemove(id).exec()
+}
+
 export const songResolvers = {
   Query: {
     allSongs,
     Song: getSong
+  },
+  Mutation: {
+    newSong,
+    updateSong,
+    removeSong
   }
 }
